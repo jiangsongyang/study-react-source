@@ -1,0 +1,50 @@
+{
+  "name": "testcheck",
+  "version": "1.0.0-rc.2",
+  "description": "Property testing for JavaScript",
+  "homepage": "http://leebyron.com/testcheck-js",
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "Lee Byron",
+    "url": "https://github.com/leebyron"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/leebyron/testcheck-js"
+  },
+  "bugs": {
+    "url": "https://github.com/leebyron/testcheck-js/issues"
+  },
+  "main": "dist/testcheck.js",
+  "types": "dist/testcheck.d.ts",
+  "devDependencies": {
+    "flow-bin": "^0.37.3",
+    "jasmine-node": "^1.14.5",
+    "typescript": "^2.1.4"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "test",
+    "unit test",
+    "property test",
+    "quickcheck",
+    "doublecheck",
+    "testcheck",
+    "generative"
+  ],
+  "scripts": {
+    "test": "npm run rebuild && npm run testonly && npm run flow-check && npm run ts-check",
+    "testonly": "jasmine-node test",
+    "flow-check": "flow check test",
+    "ts-check": "DIFF=$(tsc --noEmit --noImplicitAny --strictNullChecks test/types.ts | diff test/types.ts.expected -); if [ -n \"$DIFF\" ]; then echo \"$DIFF\"; exit 1; fi;",
+    "ts-check-update": "tsc --noEmit --noImplicitAny --strictNullChecks test/types.ts > test/types.ts.expected; exit 0",
+    "build": "rm -f dist/* && lein do clean, cljsbuild once && cp type-definitions/* dist/",
+    "rebuild": "lein do cljsbuild once && cp type-definitions/* dist/",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {}
+}
