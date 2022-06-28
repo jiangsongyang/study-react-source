@@ -173,6 +173,8 @@ export function createRoot(
   options?: CreateRootOptions,
 ): RootType {
   /** 如果不是合法的 container */
+  console.log(`%ccreateRoot container start! ` , 'color:red;');
+  console.log(`createRoot container option: ` , container , options);
   if (!isValidContainer(container)) {
     throw new Error('createRoot(...): Target container is not a DOM element.');
   }
@@ -232,7 +234,8 @@ export function createRoot(
 
   /** 创建出根节点 */
   /** 根节点类型是 FiberRootNode */
-  debugger
+ 
+  console.log(`开始创建根节点`);
   const root = createContainer(
     container,
     ConcurrentRoot,
@@ -243,6 +246,7 @@ export function createRoot(
     onRecoverableError,
     transitionCallbacks,
   );
+
 
   // 把根节点标记成根节点
   markContainerAsRoot(root.current, container);
@@ -262,6 +266,8 @@ export function createRoot(
    *  _internalRoot : root;
    * }
    */
+  console.log(`root : ` , root);
+  console.log(`%c根节点创建完毕` , 'color:#40a9ff');
   return new ReactDOMRoot(root);
 }
 

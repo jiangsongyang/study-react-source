@@ -53,7 +53,6 @@ class ClassChild extends Component {
   static contextType = MyContext;
   render() {
     const { color } = this.context;
-    console.log("render-omg-"); //sy-log
 
     return (
       <div className="border">
