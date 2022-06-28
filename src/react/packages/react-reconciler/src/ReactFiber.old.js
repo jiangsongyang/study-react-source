@@ -214,6 +214,12 @@ const createFiber = function(
   key: null | string,
   mode: TypeOfMode,
 ): Fiber {
+  console.log(`创建fiber节点` , {
+    tag,
+    pendingProps,
+    key,
+    mode,
+  });
   // $FlowFixMe: the shapes are exact here but Flow doesn't like constructors
   return new FiberNode(tag, pendingProps, key, mode);
 };
@@ -432,6 +438,7 @@ export function createHostRootFiber(
   concurrentUpdatesByDefaultOverride: null | boolean,
 ): Fiber {
   let mode;
+  /** react18 默认开启 ConcurrentRoot */
   if (tag === ConcurrentRoot) {
     mode = ConcurrentMode;
     if (isStrictMode === true) {

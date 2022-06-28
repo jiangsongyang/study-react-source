@@ -95,8 +95,13 @@ function ReactDOMRoot(internalRoot: FiberRoot) {
 ReactDOMHydrationRoot.prototype.render = ReactDOMRoot.prototype.render = function(
   children: ReactNodeList,
 ): void {
-  debugger
+  
+  console.log(`%c开始执行 ReactDOMRoot render` , 'color:red');
+  console.log(`接收到的 VNode : ` , children);
+
+  /** 获取到根节点 fiber */
   const root = this._internalRoot;
+
   if (root === null) {
     throw new Error('Cannot update an unmounted root.');
   }

@@ -319,6 +319,7 @@ export function createHydrationContainer(
   return root;
 }
 
+/** 给 container 更新子节点 */
 export function updateContainer(
   element: ReactNodeList,
   container: OpaqueRoot,
@@ -337,6 +338,7 @@ export function updateContainer(
   }
 
   const context = getContextForSubtree(parentComponent);
+
   if (container.context === null) {
     container.context = context;
   } else {

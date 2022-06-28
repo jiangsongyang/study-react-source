@@ -143,6 +143,7 @@ export function createFiberRoot(
   onRecoverableError: null | ((error: mixed) => void),
   transitionCallbacks: null | TransitionTracingCallbacks,
 ): FiberRoot {
+  /** 初始化了一个 fiber 节点 */
   const root: FiberRoot = (new FiberRootNode(
     containerInfo,
     tag,
@@ -150,6 +151,8 @@ export function createFiberRoot(
     identifierPrefix,
     onRecoverableError,
   ): any);
+
+  
   if (enableSuspenseCallback) {
     root.hydrationCallbacks = hydrationCallbacks;
   }
