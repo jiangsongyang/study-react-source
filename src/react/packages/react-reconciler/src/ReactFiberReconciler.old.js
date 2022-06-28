@@ -244,6 +244,7 @@ function findHostInstanceWithWarning(
   return findHostInstance(component);
 }
 
+/** 创建 root 时调用的 方法 */
 export function createContainer(
   containerInfo: Container,
   tag: RootTag,

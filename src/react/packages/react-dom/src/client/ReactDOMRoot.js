@@ -167,10 +167,12 @@ ReactDOMHydrationRoot.prototype.unmount = ReactDOMRoot.prototype.unmount = funct
   }
 };
 
+/** createRoot 处理逻辑 */
 export function createRoot(
   container: Element | Document | DocumentFragment,
   options?: CreateRootOptions,
 ): RootType {
+  /** 如果不是合法的 container */
   if (!isValidContainer(container)) {
     throw new Error('createRoot(...): Target container is not a DOM element.');
   }
@@ -183,6 +185,7 @@ export function createRoot(
   let onRecoverableError = defaultOnRecoverableError;
   let transitionCallbacks = null;
 
+  /** 处理 options */
   if (options !== null && options !== undefined) {
     if (__DEV__) {
       if ((options: any).hydrate) {
@@ -205,9 +208,11 @@ export function createRoot(
         }
       }
     }
+    /** 是否是严格模式 */
     if (options.unstable_strictMode === true) {
       isStrictMode = true;
     }
+    /** 并发更新默认覆盖 */
     if (
       allowConcurrentByDefault &&
       options.unstable_concurrentUpdatesByDefault === true
@@ -225,6 +230,9 @@ export function createRoot(
     }
   }
 
+  /** 创建出根节点 */
+  /** 根节点类型是 FiberRootNode */
+  debugger
   const root = createContainer(
     container,
     ConcurrentRoot,
@@ -235,14 +243,25 @@ export function createRoot(
     onRecoverableError,
     transitionCallbacks,
   );
+
+  // 把根节点标记成根节点
   markContainerAsRoot(root.current, container);
 
+  // 拿到了 根节点的真实DOM
   const rootContainerElement: Document | Element | DocumentFragment =
     container.nodeType === COMMENT_NODE
       ? (container.parentNode: any)
       : container;
-  listenToAllSupportedEvents(rootContainerElement);
 
+  // 处理事件 ?
+  listenToAllSupportedEvents(rootContainerElement);
+  
+  // return 了一个包裹后的对象
+  /**
+   * {
+   *  _internalRoot : root;
+   * }
+   */
   return new ReactDOMRoot(root);
 }
 

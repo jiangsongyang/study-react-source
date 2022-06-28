@@ -124,6 +124,9 @@ function FiberRootNode(
   }
 }
 
+/**
+ * 创建 fiber 根节点
+ */
 export function createFiberRoot(
   containerInfo: any,
   tag: RootTag,
@@ -165,6 +168,8 @@ export function createFiberRoot(
   root.current = uninitializedFiber;
   uninitializedFiber.stateNode = root;
 
+  /** 可以被缓存吗? */
+  /** 18.2 开启了缓存功能 */
   if (enableCache) {
     const initialCache = createCache();
     retainCache(initialCache);
@@ -193,6 +198,7 @@ export function createFiberRoot(
     uninitializedFiber.memoizedState = initialState;
   }
 
+  /** 给当前 fiber 添加更新队列 */
   initializeUpdateQueue(uninitializedFiber);
 
   return root;
