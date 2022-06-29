@@ -199,6 +199,7 @@ export function cloneUpdateQueue<State>(
   }
 }
 
+/** 创建更新 */
 export function createUpdate(eventTime: number, lane: Lane): Update<*> {
   const update: Update<*> = {
     eventTime,
@@ -213,17 +214,19 @@ export function createUpdate(eventTime: number, lane: Lane): Update<*> {
   return update;
 }
 
+/** 入队 */
 export function enqueueUpdate<State>(
   fiber: Fiber,
   update: Update<State>,
   lane: Lane,
 ): FiberRoot | null {
   const updateQueue = fiber.updateQueue;
+  /** 如果 fiber 上没有更新队列 */
   if (updateQueue === null) {
     // Only occurs if the fiber has been unmounted.
     return null;
   }
-
+  /** 拿到当前队列 */
   const sharedQueue: SharedQueue<State> = (updateQueue: any).shared;
 
   if (__DEV__) {

@@ -67,6 +67,7 @@ export type Dependencies = {
 
 // A Fiber is work on a Component that needs to be done or was done. There can
 // be more than one per component.
+/** Fiber 类型声明 */
 export type Fiber = {|
   // These first fields are conceptually members of an Instance. This used to
   // be split into a separate type and intersected with the other Fiber fields,
@@ -79,19 +80,29 @@ export type Fiber = {|
   // minimize the number of objects created during the initial render.
 
   // Tag identifying the type of fiber.
+  /** 函数组件 ｜ 类组件处理方式不一样 所以需要一个 workTag */
   tag: WorkTag,
 
   // Unique identifier of this child.
+  /** 标记子节点的唯一性 */
+  /** 范围 : 当前层级 */
   key: null | string,
 
   // The value of element.type which is used to preserve the identity during
   // reconciliation of this child.
+  /** 节点类型 */
   elementType: any,
-
+  
   // The resolved function/class/ associated with this fiber.
+  /** 节点类型 */
   type: any,
 
   // The local state associated with this fiber.
+  /** 
+   * 如果是原生标签  : dom
+   * 如果是类组件    :  实例
+   * 函数组件       :  instance
+   */
   stateNode: any,
 
   // Conceptual aliases
@@ -104,11 +115,18 @@ export type Fiber = {|
   // This is effectively the parent, but there can be multiple parents (two)
   // so this is only the parent of the thing we're currently processing.
   // It is conceptually the same as the return address of a stack frame.
+  /** 一般情况下指向当前节点的父节点 */
   return: Fiber | null,
 
   // Singly Linked List Tree Structure.
+  /** 子节点也是单链表结构 */
+  /** 所以只需要存储 */
+  /** 第一个子节点 */
   child: Fiber | null,
+  /** 下一个兄弟节点 */
   sibling: Fiber | null,
+  /** fiber child 是单链表结构 */
+  /** 标记节点在当前层级下的位置 */
   index: number,
 
   // The ref last used to attach this node.
@@ -123,12 +141,18 @@ export type Fiber = {|
   memoizedProps: any, // The props used to create the output.
 
   // A queue of state updates and callbacks.
+  /** 更新队列 */
   updateQueue: mixed,
 
   // The state used to create the output
+  /** 
+   * class    : 类组件 state
+   * function : Fiber 第一个 hook
+   */
   memoizedState: any,
 
   // Dependencies (contexts, events) for this fiber, if it has any
+  /** context */
   dependencies: Dependencies | null,
 
   // Bitfield that describes properties about the fiber and its subtree. E.g.
@@ -142,6 +166,7 @@ export type Fiber = {|
   // Effect
   flags: Flags,
   subtreeFlags: Flags,
+  /** 要删除的子节点们 */
   deletions: Array<Fiber> | null,
 
   // Singly linked list fast path to the next fiber with side-effects.
@@ -153,14 +178,17 @@ export type Fiber = {|
   firstEffect: Fiber | null,
   lastEffect: Fiber | null,
 
+  /**  */
   lanes: Lanes,
   childLanes: Lanes,
 
   // This is a pooled version of a Fiber. Every fiber that gets updated will
   // eventually have a pair. There are cases when we can clean up pairs to save
   // memory if we need to.
+  /** 双缓存链接 */
   alternate: Fiber | null,
 
+  /** 下面都是调试相关 */
   // Time spent rendering this Fiber and its descendants for the current update.
   // This tells us how well the tree makes use of sCU for memoization.
   // It is reset to 0 each time we render and only updated when we don't bailout.
