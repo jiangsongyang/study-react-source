@@ -243,10 +243,15 @@ export function enqueueUpdate<State>(
       didWarnUpdateInsideUpdate = true;
     }
   }
-
+  /**
+   * 如果当前组件有更新
+   * 但是组件还没被渲染
+   * 就不需要发生更新
+   */
   if (isUnsafeClassRenderPhaseUpdate(fiber)) {
     // This is an unsafe render phase update. Add directly to the update
     // queue so we can process it immediately during the current render.
+    /** 创建环形链表 */
     const pending = sharedQueue.pending;
     if (pending === null) {
       // This is the first update. Create a circular list.
@@ -262,7 +267,9 @@ export function enqueueUpdate<State>(
     // update a different component during render phase than the one that is
     // currently renderings (a pattern that is accompanied by a warning).
     return unsafe_markUpdateLaneFromFiberToRoot(fiber, lane);
-  } else {
+  }
+  /** coucurrent 模式下走这里 */
+  else {
     return enqueueConcurrentClassUpdate(fiber, sharedQueue, update, lane);
   }
 }

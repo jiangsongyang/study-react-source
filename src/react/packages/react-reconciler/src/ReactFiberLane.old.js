@@ -29,7 +29,7 @@ import {clz32} from './clz32';
 
 // Lane values below should be kept in sync with getLabelForLane(), used by react-devtools-timeline.
 // If those values are changed that package should be rebuilt and redeployed.
-
+/** Fiber lanes */
 export const TotalLanes = 31;
 
 export const NoLanes: Lanes = /*                        */ 0b0000000000000000000000000000000;

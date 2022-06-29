@@ -261,6 +261,7 @@ const {
 
 type ExecutionContext = number;
 
+/** react 执行阶段 */
 export const NoContext = /*             */ 0b000;
 const BatchedContext = /*               */ 0b001;
 const RenderContext = /*                */ 0b010;
@@ -276,6 +277,7 @@ const RootCompleted = 5;
 const RootDidNotComplete = 6;
 
 // Describes where we are in the React execution stack
+/** react当前执行到那个阶段了 */
 let executionContext: ExecutionContext = NoContext;
 // The root we're working on
 let workInProgressRoot: FiberRoot | null = null;

@@ -118,22 +118,16 @@ export function enqueueConcurrentClassUpdate<State>(
   update: ClassUpdate<State>,
   lane: Lane,
 ) {
-  /**
-   * 如果当前组件有更新
-   * 但是组件还没被渲染
-   * 就不需要发生更新
-   */
+
   const interleaved = queue.interleaved;
-  /** 如果是第一个更新 */
   if (interleaved === null) {
-    /** 创造链表 */
     // This is the first update. Create a circular list.
     update.next = update;
     // At the end of the current render, this queue's interleaved updates will
     // be transferred to the pending queue.
     pushConcurrentUpdateQueue(queue);
   } 
-  /** 如果不是第一个 */
+
   else {
     update.next = interleaved.next;
     interleaved.next = update;
